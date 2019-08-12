@@ -17,7 +17,7 @@ import Arguments
 import Prelude
 
 -- | GHC releases I test with
-ghcReleases = ["7.10.3","8.0.2","8.2.2","8.4.4","8.6.5"]
+ghcReleases = ["7.10.3"]
 
 -- | The next version of GHC that has not yet been released
 --   (might test it in Travis, but won't be in the tested-with)
@@ -211,7 +211,7 @@ run Test{..} = Just $ do
         system_ "cabal build"
         system_ "cabal haddock --hoogle"
         when (ghcVer `elem` takeEnd 2 ghcReleases) $ do
-            -- earlier Haddock's forget to document class members in the --hoogle
+            -- Haddock for version <= 7.8.4 forget to document class members in the --hoogle
             checkHoogle
         when install $ do
             system_ "cabal copy"
