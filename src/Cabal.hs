@@ -77,7 +77,7 @@ checkTravis = do
     when (length (filter isScript src) /= 1) $
         fail $ "Expect to see exactly one script but not, please add: " ++ script
 
-    claimed <- (\xs -> sort $ "head" : maybeToList ghcNext ++ xs) <$> testedWith
+    claimed <- (\xs -> sort $ maybeToList ghcNext ++ xs) <$> testedWith
     let extend x = fromMaybe x $ lookup (x++".") [(dropWhileEnd (/= '.') v, v) | v <- ghcReleases ++ maybeToList ghcNext]
     -- Add a nub since you might write an entry twice, once with expected_failures
     let tested = nubSort [extend $ fst $ word1 num | Just (_, num) <- map (stripInfix "GHCVER=") src]
